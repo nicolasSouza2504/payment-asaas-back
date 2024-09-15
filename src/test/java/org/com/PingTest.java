@@ -7,14 +7,14 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
 
 @QuarkusTest
-class ExampleResourceTest {
+class PingTest {
     @Test
-    void testHelloEndpoint() {
+    void pingTest() {
         given()
-                .when().get("/hello")
+                .when().get("/ping")
                 .then()
                 .statusCode(200)
-                .body(is("Hello from Quarkus REST"));
+                .body(is("{\"message\": \"pong\"}"));
     }
 
 }
