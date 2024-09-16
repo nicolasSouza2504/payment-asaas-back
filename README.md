@@ -130,9 +130,9 @@ The application is hosted on Amazon Web Services (AWS):
     }
   ]
 
-  ## Configuring Asaas Webhooks
+## Configuring Asaas Webhooks
 
-When setting up webhooks in your Asaas account, use the generated `apiKey` as a parameter in the webhook URL. This ensures that payment updates are correctly associated with your user account.
+When setting up webhooks in your Asaas account, use the generated `apiKey` as a token in the webhook. This ensures that payment updates are correctly associated with your user account.
 
 **Example Webhook URL**:
 
