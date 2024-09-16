@@ -1,68 +1,58 @@
-# pagamento-asaas-back
+# README.md (English Version)
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+## Payment Integration with Asaas - Backend Application
 
-If you want to learn more about Quarkus, please visit its website: <https://quarkus.io/>.
+This project is a backend application that provides webhook integration with the **Asaas** payment platform. It allows users to register, generate API keys, and manage payments through secure APIs.
 
-## Running the application in dev mode
+**GitHub Repository**: [https://github.com/nicolasSouza2504/payment-asaas-back](https://github.com/nicolasSouza2504/payment-asaas-back)
 
-You can run your application in dev mode that enables live coding using:
+---
 
-```shell script
-./mvnw compile quarkus:dev
-```
+## Table of Contents
 
-> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at <http://localhost:8080/q/dev/>.
+- [Features](#features)
+- [Architecture](#architecture)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+- [API Endpoints](#api-endpoints)
+  - [1. User Registration](#1-user-registration)
+  - [2. User Login](#2-user-login)
+  - [3. List All Payments](#3-list-all-payments)
+- [Configuring Asaas Webhooks](#configuring-asaas-webhooks)
+- [Usage](#usage)
+- [Technologies Used](#technologies-used)
+- [License](#license)
 
-## Packaging and running the application
+---
 
-The application can be packaged using:
+## Features
 
-```shell script
-./mvnw package
-```
+- **User Registration**: Create users and generate unique API keys linked with your Asaas API token.
+- **Webhook Configuration**: Utilize the generated API key to configure Asaas webhooks, ensuring payment updates are linked to the correct user.
+- **Authentication**: Secure login mechanism that returns an `authToken` for authenticated requests.
+- **Payment Retrieval**: Access all payment updates from your Asaas account through a dedicated API endpoint.
 
-It produces the `quarkus-run.jar` file in the `target/quarkus-app/` directory.
-Be aware that it’s not an _über-jar_ as the dependencies are copied into the `target/quarkus-app/lib/` directory.
+## Architecture
 
-The application is now runnable using `java -jar target/quarkus-app/quarkus-run.jar`.
+The application is hosted on Amazon Web Services (AWS):
 
-If you want to build an _über-jar_, execute the following command:
+- **Amazon EC2**: Hosts the backend application.
+- **Amazon RDS (PostgreSQL)**: Manages the relational database.
 
-```shell script
-./mvnw package -Dquarkus.package.jar.type=uber-jar
-```
+---
 
-The application, packaged as an _über-jar_, is now runnable using `java -jar target/*-runner.jar`.
+## Getting Started
 
-## Creating a native executable
+### Prerequisites
 
-You can create a native executable using:
+- **Java 17** or higher
+- **Maven** or **Gradle**
+- **Asaas API Access**: You need access your asaas account and parameterize the webhook for payment updates.
 
-```shell script
-./mvnw package -Dnative
-```
+### Installation
 
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using:
+1. **Clone the Repository**
 
-```shell script
-./mvnw package -Dnative -Dquarkus.native.container-build=true
-```
-
-You can then execute your native executable with: `./target/pagamento-asaas-back-1.0-SNAPSHOT-runner`
-
-If you want to learn more about building native executables, please consult <https://quarkus.io/guides/maven-tooling>.
-
-## Related Guides
-
-- REST ([guide](https://quarkus.io/guides/rest)): A Jakarta REST implementation utilizing build time processing and
-  Vert.x. This extension is not compatible with the quarkus-resteasy extension, or any of the extensions that depend on
-  it.
-
-## Provided Code
-
-### REST
-
-Easily start your REST Web Services
-
-[Related guide section...](https://quarkus.io/guides/getting-started-reactive#reactive-jax-rs-resources)
+   ```bash
+   git clone https://github.com/nicolasSouza2504/payment-asaas-back.git
