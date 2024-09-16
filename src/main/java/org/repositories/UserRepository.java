@@ -25,5 +25,17 @@ public class UserRepository {
 
     }
 
+    @Transactional
+    public UserLogin findByApiKey(String apiKey) {
+
+        return entityManager.createQuery("SELECT u FROM UserLogin u WHERE u.apiKey = :apiKey", UserLogin.class)
+                .setParameter("apiKey", apiKey)
+                .getResultList()
+                .stream()
+                .findFirst()
+                .orElse(null);
+
+    }
+
 }
 

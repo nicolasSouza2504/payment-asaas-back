@@ -24,9 +24,7 @@ public class LoginService {
     RedisService redisService;
 
     @Transactional
-    public Session login(String jsonUser) {
-
-        UserLogin userLogin = new Gson().fromJson(jsonUser, UserLogin.class);
+    public Session login(UserLogin userLogin) {
 
         validateLogin(userLogin);
 
@@ -50,6 +48,23 @@ public class LoginService {
 
         } else {
             UtilErrorRest.throwResponseError("User Not Found", 404);
+        }
+
+        return null;
+
+    }
+
+    @Transactional
+    public Session loginByApiKey(String apiKey) {
+
+        if (StringUtils.isNotEmpty(apiKey)) {
+
+            UserLogin userDb = userRepository.findByApiKey(apiKey);
+
+            if (userDb != null) {
+                return new Session(UUID.randomUUID().toString(), userDb.getUserName());
+            }
+
         }
 
         return null;

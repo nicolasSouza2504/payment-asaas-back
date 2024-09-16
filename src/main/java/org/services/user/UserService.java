@@ -12,6 +12,8 @@ import org.model.UserLogin;
 import org.repositories.UserRepository;
 import org.utils.UtilErrorRest;
 
+import java.util.UUID;
+
 @ApplicationScoped
 public class UserService {
 
@@ -29,6 +31,8 @@ public class UserService {
         validateUser(userLogin);
 
         setSaltAndEncryptedPassword(userLogin);
+
+        userLogin.setApiKey(UUID.randomUUID().toString());
 
         entityManager.persist(userLogin);
 
@@ -58,6 +62,10 @@ public class UserService {
 
             if (StringUtils.isEmpty(userLogin.getUserName())) {
                 UtilErrorRest.throwResponseError("User name is required");
+            }
+
+            if (StringUtils.isEmpty(userLogin.getApiKeyPayments())) {
+                UtilErrorRest.throwResponseError("Api key payments is required");
             }
 
             UserLogin userSaved = userRepository.findByUserName(userLogin.getUserName());

@@ -14,6 +14,7 @@ import jakarta.ws.rs.ext.Provider;
 import org.apache.commons.lang3.StringUtils;
 import org.dto.ServerSession;
 import org.dto.Session;
+import org.services.login.LoginService;
 import org.services.redis.RedisService;
 import org.utils.UtilErrorRest;
 
@@ -26,6 +27,9 @@ public class RequestHandler implements ContainerRequestFilter {
 
     @Inject
     RedisService redisService;
+
+    @Inject
+    LoginService loginService;
 
     @Override
     public void filter(ContainerRequestContext requestContext) {
@@ -48,11 +52,24 @@ public class RequestHandler implements ContainerRequestFilter {
 
     public Session verifySession(ContainerRequestContext requestContext) {
 
+        Session session = null;
+
         String authToken = getAuthToken(requestContext);
+        String asaasAccessToken = requestContext.getHeaderString("asaas-access-token");
 
-        JsonObject jsonSession = StringUtils.isNotEmpty(authToken) ? (JsonObject) redisService.get(authToken) : null;
+        if (StringUtils.isNotEmpty(authToken)) {
 
-        return jsonSession != null ? new Gson().fromJson(jsonSession.toString(), Session.class) : null;
+            JsonObject jsonSession = StringUtils.isNotEmpty(authToken) ? (JsonObject) redisService.get(authToken) : null;
+
+            if (jsonSession != null) {
+                session = new Gson().fromJson(jsonSession.toString(), Session.class);
+            }
+
+        } else if (StringUtils.isNotEmpty(asaasAccessToken)) {
+            session = loginService.loginByApiKey(asaasAccessToken);
+        }
+
+        return session;
 
     }
 

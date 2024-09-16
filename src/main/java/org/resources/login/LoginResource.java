@@ -9,6 +9,7 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.dto.Session;
+import org.model.UserLogin;
 import org.services.login.LoginService;
 
 @Path("/login")
@@ -22,7 +23,7 @@ public class LoginResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response login(String jsonUser) {
 
-        Session session = loginService.login(jsonUser);
+        Session session = loginService.login(new Gson().fromJson(jsonUser, UserLogin.class));
 
         return Response.ok(new Gson().toJson(session)).build();
 

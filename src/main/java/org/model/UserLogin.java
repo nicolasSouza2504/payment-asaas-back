@@ -21,4 +21,10 @@ public class UserLogin {
     @Column(name = "user_name", columnDefinition = "TEXT", unique = true)
     private String userName;
 
+    @Column(name = "api_key_payments", columnDefinition = "TEXT")
+    private String apiKeyPayments;
+
+    @Column(name = "api_key", columnDefinition = "TEXT")
+    private String apiKey;
+
 }

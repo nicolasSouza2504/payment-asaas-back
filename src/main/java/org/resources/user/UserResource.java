@@ -1,5 +1,7 @@
 package org.resources.user;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;
@@ -24,7 +26,7 @@ public class UserResource {
 
         UserLogin user = userService.save(jsonUser);
 
-        return Response.ok(user).status(200).build();
+        return Response.ok("Save the field api key to register webhooks auth: " + new Gson().toJson(user)).status(200).build();
 
     }
 

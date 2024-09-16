@@ -6,6 +6,7 @@ import lombok.Data;
 public class Session {
 
     private String authToken;
+    private String asaasAccessToken;
     private String userName;
 
     public Session(String authToken, String userName) {
