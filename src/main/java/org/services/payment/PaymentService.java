@@ -1,17 +1,20 @@
 package org.services.payment;
 
+import com.google.gson.Gson;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import org.apache.commons.lang3.StringUtils;
 import org.dto.payment.PaymentDto;
+import org.dto.payment.PaymentExibitionDto;
 import org.model.Payment;
 import org.repositories.PaymentRepository;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class PaymentService {
@@ -72,6 +75,24 @@ public class PaymentService {
     private Boolean validStatusUpdate(PaymentDto paymentStatusDto) {
         return  paymentStatusDto != null && StringUtils.isNotEmpty(paymentStatusDto.getEvent())
                 && paymentStatusDto.getPayment() != null && paymentStatusDto.getPayment().getId() != null;
+    }
+
+    public List<PaymentExibitionDto> convertToPaymentExibitionDto(List<Payment> payments) {
+
+        if (payments != null && !payments.isEmpty()) {
+
+            return payments.stream().map(payment -> {
+
+                PaymentExibitionDto paymentExibitionDto = new Gson().fromJson(new Gson().toJson(payment), PaymentExibitionDto.class);
+
+                return paymentExibitionDto;
+
+            }).collect(Collectors.toList());
+
+        }
+
+        return null;
+
     }
 
 }

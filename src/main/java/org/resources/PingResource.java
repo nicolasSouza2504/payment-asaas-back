@@ -1,4 +1,4 @@
-package org.services;
+package org.resources;
 
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
