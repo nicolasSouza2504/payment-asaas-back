@@ -2,6 +2,7 @@ package org.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.dto.ServerSession;
 
 import java.util.Date;
 
@@ -35,7 +36,7 @@ public class Payment {
     private Double value;
 
     @Column(name = "billing_type")
-    private Double billingType;
+    private String billingType;
 
     @PreUpdate
     @PrePersist
@@ -43,6 +44,8 @@ public class Payment {
 
         if (this.user != null) {
             this.userId = this.getUser().getId();
+        } else if (ServerSession.getSession() != null && ServerSession.getSession().getUserLogin() != null) {
+            this.setUserId(ServerSession.getSession().getUserLogin().getId());
         }
 
     }

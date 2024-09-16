@@ -36,7 +36,7 @@ public class LoginService {
 
             if (rigthPassword) {
 
-                Session session = new Session(UUID.randomUUID().toString(), userDb.getUserName());
+                Session session = new Session(UUID.randomUUID().toString(), userDb.getUserName(), userDb);
 
                 redisService.set(session.getAuthToken(), new Gson().toJson(session));
 
@@ -62,7 +62,7 @@ public class LoginService {
             UserLogin userDb = userRepository.findByApiKey(apiKey);
 
             if (userDb != null) {
-                return new Session(UUID.randomUUID().toString(), userDb.getUserName());
+                return new Session(UUID.randomUUID().toString(), userDb.getUserName(), userDb);
             }
 
         }
