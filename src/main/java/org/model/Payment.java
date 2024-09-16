@@ -14,8 +14,15 @@ public class Payment {
     @GeneratedValue
     private Long id;
 
-    @Column(name = "api_key", length = 80)
-    private String event;
+    @ManyToOne(targetEntity = UserLogin.class)
+    @JoinColumn(name = "user_id", referencedColumnName = "id", updatable = false, insertable = false)
+    private UserLogin user;
+
+    @Column(name = "user_id")
+    private Long userId;
+
+    @Column(name = "status", length = 80)
+    private String status;
 
     @Column(name = "date_created")
     @Temporal(TemporalType.TIMESTAMP)
@@ -23,5 +30,21 @@ public class Payment {
 
     @Column(name = "payment_id", columnDefinition = "TEXT")
     private String paymentId;
+
+    @Column(name = "value", columnDefinition = "TEXT")
+    private Double value;
+
+    @Column(name = "billing_type")
+    private Double billingType;
+
+    @PreUpdate
+    @PrePersist
+    public void setOptions() {
+
+        if (this.user != null) {
+            this.userId = this.getUser().getId();
+        }
+
+    }
 
 }
